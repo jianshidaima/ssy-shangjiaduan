@@ -1,3 +1,5 @@
+var Url = 'http://192.168.1.200:8082/APPMerchant';
+
 var category = [
 	{
 		'text':'主粮',

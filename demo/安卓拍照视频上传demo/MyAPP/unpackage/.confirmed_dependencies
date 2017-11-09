@@ -1,0 +1,14 @@
+{
+  "index.html": {
+    "resources": [
+      "css/index.css",
+      "js/common.js",
+      "css/common.css",
+      "js/index.js"
+    ],
+    "refer": [
+      "camera_image.html",
+      "camera_video.html"
+    ]
+  }
+}

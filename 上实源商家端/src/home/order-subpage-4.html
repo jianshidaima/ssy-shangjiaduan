@@ -1,51 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
-    <script src="../js/mui.min.js"></script>
-    <link href="../css/mui.min.css" rel="stylesheet"/>
-    <script type="text/javascript" charset="utf-8">
-//      document.addEventListener('plusready',function(){
-//          function savePicture(path){
-//              plus.gallery.save(path,function(){
-//                  plus.nativeUI.alert('保存图片成功！目录地址是：'+path);
-//              })
-//
-//          }
-//          var lfs = null;//保留上次选择图片的列表
-//          //调用系统相册
-//
-//          console.log("选择图片！");
-//          plus.gallery.pick(function(path){
-//              console.log(path);
-//              lfs = path.files;
-//              //savePicture(path);
-//          },function(e){
-//              console.log("取消图片！");
-//          },{filter:"none",multiple:true,maximum:3,system:false,onmaxed:function(){
-//              plus.nativeUI.alert('最多只能选择三个！')
-//          },popover:true,selected:lfs});
-//
-//          //调用系统摄像头进行拍照
-//
-//          var r = null;
-//          var cmr = plus.camera.getCamera(0);
-//          var res = cmr.supportedImageResolutions[0];
-//          var fmt = cmr.supportedImageFormats[0];
-//          cmr.captureImage(function(path){
-//
-//          },function(err){
-//
-//          },{resolution:res,format:fmt});
-//
-//
-//
-//      },false)
-    </script>
-</head>
-<body>
-
-</body>
-</html>
+<!DOCTYPE html> 
+<html> 
+ 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /> 
+        <title></title> 
+        <script src="../js/mui.min.js"></script> 
+        <link href="../css/mui.min.css" rel="stylesheet" /> 
+        <script type="text/javascript" charset="utf-8"> 
+            mui.init(); 
+            document.addEventListener("plusready", function() { //"plusready"事件触发时执行plus对象的方法 
+                judgePlatform(); 
+            }, false); 
+ 
+            function judgePlatform() { 
+                var plat = ""; 
+                switch(plus.os.name) { 
+                    case "Android": 
+                        // Android平台: plus.android.* 
+                        plat = "android"; 
+                        var btn = document.getElementById("playBtn"); 
+                        //监听点击事件 
+                        btn.addEventListener("tap", function() { 
+                            console.log("-------开始播放--------"); 
+                            playVideo(); 
+                        }); 
+                        //触发submit按钮的点击事件 
+//                        mui.trigger(btn, 'tap'); 
+                        break; 
+                    case "iOS": 
+                        // iOS平台: plus.ios.* 
+                        plat = "ios"; 
+                        break; 
+                    default: 
+                        // 其它平台 
+                        plat = "other"; 
+                        break; 
+                } 
+                document.getElementById("msg").innerHTML ="当前平台是："+plat; 
+            } 
+ 
+            function playVideo() { 
+                var Intent = plus.android.importClass("android.content.Intent"); 
+                var Uri = plus.android.importClass("android.net.Uri"); 
+                var main = plus.android.runtimeMainActivity(); 
+                var intent = new Intent(Intent.ACTION_VIEW); 
+                var uri = Uri.parse("http://www.html5videoplayer.net/videos/madagascar3.mp4"); 
+                intent.setDataAndType(uri, "video/*"); 
+                main.startActivity(intent); 
+            } 
+        </script> 
+    </head> 
+<style type="text/css"> 
+    div{ 
+        text-align: center; 
+        margin-top: 7rem; 
+    } 
+</style> 
+    <body> 
+        <div id="msg"></div> 
+        <div id=""> 
+    <button type="button" class="mui-btn mui-btn-blue" id="playBtn">播放</button> 
+        </div> 
+ 
+    </body> 
+ 
+</html> 

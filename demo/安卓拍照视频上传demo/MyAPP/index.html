@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/index.css" type="text/css" charset="utf-8"/>
+	</head>
+	<body>
+		<header id="header">
+			<div class="nvbt iback" onclick="back()"></div>
+			<div class="nvtt">Camera</div>
+			<div class="nvbt idoc" onclick="openDoc('Camera Document','/doc/camera.html')"></div>
+		</header>
+		<div id="dcontent" class="dcontent">
+			<div class="button" onclick="getImage()">拍照</div>
+			<div class="button" onclick="getVideo()">录像</div>
+			<br/>
+			<!-- History list -->
+			<ul id="history" class="dlist" style="text-align:left;">
+				<li id="empty" class="ditem-empty">无历史记录</li>
+			</ul>
+			<br/>
+			<div class="button button-waring" onclick="upload()">上传多媒体</div>
+			<div class="button button-waring" onclick="cleanHistory()">清空历史记录</div>
+			<br/>
+		</div>
+		<div id="output">
+			
+			
+		Camera管理摄像头设备，可用于拍摄照片、录制视频文件。
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/immersed.js" ></script>
+</html>

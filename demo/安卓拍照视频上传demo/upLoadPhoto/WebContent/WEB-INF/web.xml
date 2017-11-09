@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>upLoadPhoto</display-name>
+   
+   <servlet>
+       <!-- 声明Servlet对象 -->
+       <servlet-name>upload</servlet-name>
+       <!-- 上面一句指定Servlet对象的名称 -->
+       <servlet-class>com.upLoadPhoto.FileUpload</servlet-class>
+       <!-- 上面一句指定Servlet对象的完整位置，包含包名和类名 -->
+   </servlet>
+   <servlet-mapping>
+       <!-- 映射Servlet -->
+       <servlet-name>upload</servlet-name>
+       <!--<servlet-name>与上面<Servlet>标签的<servlet-name>元素相对应，不可以随便起名  -->
+       <url-pattern>/upload</url-pattern>
+       <!-- 上面一句话用于映射访问URL -->
+   </servlet-mapping>
+</web-app>

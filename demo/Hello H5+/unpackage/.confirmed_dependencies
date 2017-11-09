@@ -1,37 +1,217 @@
 {
-  "index.html": {
-    "resources": [
-      "css/common.css",
-      "js/update.js",
-      "js/shortcut.js",
-      "js/immersed.js"
-    ],
-    "refer": [
-      "plus/downloader.html",
-      "about.html",
-      "plus/oauth.html",
-      "plus/share.html"
-    ]
-  },
-  "plus/downloader.html": {
-    "resources": [
-      "js/common.js"
-    ]
-  },
-  "about.html": {
-    "resources": [
-      "js/common.js",
-      "icon.png",
-      "css/common.css",
-      "js/immersed.js"
-    ]
-  },
-  "plus/share.html": {
-    "resources": [
-      "img/add.png",
-      "js/common.js",
-      "css/common.css",
-      "js/immersed.js"
-    ]
-  }
+	"index.html": {
+		"resources": [
+			"css/common.css",
+			"js/update.js",
+			"js/shortcut.js",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/downloader.html",
+			"about.html",
+			"plus/oauth.html",
+			"plus/share.html",
+			"plus/camera.html",
+			"plus/gallery.html",
+			"plus/nativeui.html",
+			"plus/orientation.html",
+			"plus/runtime.html",
+			"plus/audio.html",
+			"plus/barcode.html",
+			"plus/file.html",
+			"plus/uploader.html",
+			"plus/push.html",
+			"plus/message.html",
+			"plus/events.html",
+			"plus/device.html",
+			"plus/navigator.html",
+			"plus/statistic.html",
+			"plus/webview.html",
+			"plus/zip.html"
+		]
+	},
+	"plus/downloader.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"about.html": {
+		"resources": [
+			"js/common.js",
+			"icon.png",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/share.html": {
+		"resources": [
+			"img/add.png",
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/camera.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/camera_image.html",
+			"plus/camera_video.html"
+		]
+	},
+	"plus/camera_video.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css"
+		]
+	},
+	"plus/gallery.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/nativeui.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/orientation.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/orientation_compass.html"
+		]
+	},
+	"plus/orientation_compass.html": {
+		"resources": [
+			"img/orientationbg.png",
+			"img/orientationa.png",
+			"img/orientationc.png"
+		]
+	},
+	"plus/runtime.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/audio.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js",
+			"img/astop.png",
+			"img/arecord.png"
+		]
+	},
+	"plus/camera_image.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css"
+		]
+	},
+	"plus/barcode.html": {
+		"resources": [
+			"js/common.js",
+			"img/barcode.png"
+		]
+	},
+	"plus/file.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"img/fdisk.png",
+			"img/fup.png",
+			"img/ffile.png",
+			"img/fdir.png",
+			"js/immersed.js"
+		]
+	},
+	"plus/uploader.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/push.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/message.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/events.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/device.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/navigator.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/statistic.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		]
+	},
+	"plus/webview_new.html": {
+		"resources": [
+			"img/ui.png"
+		]
+	},
+	"plus/webview_animation.html": {
+		"refer": [
+			"plus/webview_new.html"
+		]
+	},
+	"plus/webview.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/webview_animation.html"
+		]
+	},
+	"plus/zip.html": {
+		"resources": [
+			"js/common.js"
+		]
+	}
 }

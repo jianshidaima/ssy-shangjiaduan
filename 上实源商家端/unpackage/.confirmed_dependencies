@@ -215,7 +215,24 @@
 			"src/css/mui.previewimage.css",
 			"src/js/mui.previewimage.js",
 			"src/js/mui.zoom.js",
-			"src/images/icon/014.png"
+			"src/images/icon/014.png",
+			"src/css/zy.media.min.css",
+			"src/js/zy.media.min.js",
+			"src/js/uploadVideo.js",
+			"src/js/uploadMainOrSubImg.js",
+			"src/css/images/pause.png",
+			"src/css/images/play.png",
+			"src/js/hivideo.js",
+			"src/css/hivideo.css",
+			"src/css/images/play-big.png",
+			"src/css/images/fullscreen.png",
+			"src/css/images/volume.png",
+			"src/css/images/fullscreen_off.png",
+			"src/images/icon/015.png",
+			"src/js/addProduct.js"
+		],
+		"refer": [
+			"src/video/video.html"
 		]
 	},
 	"src/product/productDetails.html": {
@@ -239,6 +256,13 @@
 			"src/fonts/mui.ttf",
 			"src/js/mui.min.js",
 			"src/css/mui.min.css",
+			"src/js/jquery.js"
+		]
+	},
+	"src/video/video.html": {
+		"resources": [
+			"src/css/zy.media.min.css",
+			"src/js/zy.media.min.js",
 			"src/js/jquery.js"
 		]
 	}

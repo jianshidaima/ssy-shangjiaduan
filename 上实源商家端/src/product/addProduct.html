@@ -14,7 +14,8 @@
 		<link href="../css/mui.picker.min.css" rel="stylesheet" />
 		<link href="../css/mui.poppicker.css" rel="stylesheet" />
 		<link href="../css/mui.previewimage.css" rel="stylesheet" />
-		
+		<link href="../css/hivideo.css" rel="stylesheet" />
+		<script src="../js/hivideo.js"></script>
 		<style>
 			body,
 			.mui-content{
@@ -45,6 +46,7 @@
 						<span id="addMainImgBtn">
 							<img src="../images/icon/012.png"/>
 						</span>
+						<input id="mainImgVal" type="hidden" />
 						<em class="error">请上传一张商品主图</em>
 					</div>
 				</div>
@@ -60,15 +62,58 @@
 						<span id="addSubImgBtn">
 							<img src="../images/icon/011.png" alt="" />
 						</span>
+						<input id="subImgVal" type="hidden" />
 						<em class="error">至少上传一张商品幅图</em>
 					</div>
 				</div>
-				<div class="addVideo">
-					<em class="lebal">添加短视频：</em>
-					<div class="img">
-						<span id="addVideoBtn">
-							<img src="../images/icon/011.png" alt="" />
-						</span>
+				<div class="addVideoSwitch">
+					<div class="title">
+						<em class="lebal">是否上传短视频:</em>
+						<div class="input">
+							<div class="switchBtn">
+								<div id="uploadShortVideo" class="mui-switch mui-switch-mini">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</div>
+							<input id="uploadShortVideoVal" type="hidden" value="0" />
+						</div>
+					</div>
+					<div id="uploadShortVideoBox" class="addVideo">
+						<div class="btnBox">
+							<em class="lebal">添加视频文件（<10M）：</em>
+							<div class="list">
+								<!--<span class="videoFileBox">
+									<img id="playVideo" data-source="'+src+'" class="play" src="../images/icon/015.png" alt="" />
+									<em class="delVideoBtn">
+										<img src="../images/icon/014.png" alt="" />
+									</em>
+								</span>-->
+								<span id="addVideoFileBtn">
+									<img src="../images/icon/012.png" alt="" />
+								</span>
+								<input id="videoSrcVal" type="hidden" />
+								<em class="error">请上传视频文件</em>
+							</div>
+						</div>
+						<div class="btnBox">
+							<em class="lebal">添加视频封面图：</em>
+							<div class="list">
+								<!--<span class="videoImgBox">
+									<img src="../images/icon/011.png" alt="" data-preview-src="" data-preview-group="2"/>
+									<em class="delVideoBtn">
+										<img src="../images/icon/014.png" alt="" />
+									</em>
+								</span>-->
+								<span id="addVideoImgBtn">
+									<img src="../images/icon/011.png" alt="" />
+								</span>
+								<input id="videoImgSrc" type="hidden" />
+								<em class="error">请上传视频封面图</em>
+							</div>
+						</div>
+						<!--<div class="main-wrap">
+					        <video id="video" poster="https://r1.ykimg.com/05420408584A363C6A0A47047DD24931" ishivideo="true" src="http://192.168.1.200:8082/APPMerchant/upload/videocove/bed77a77-56ad-4b7a-b1c2-3cda9932c21d.mp4" isrotate="false" autoHide="true"></video>
+					    </div>-->
 					</div>
 				</div>
 			</div>
@@ -133,11 +178,11 @@
 							</div>
 							<p id="showSpec" class="txt">
 								<em id="showSpecTxt">KG</em>
-								<input id="showSpecVal" type="hidden" value=""/>
+								<input id="showSpecVal" type="hidden" value="KG"/>
 							</p>
 							<p id="showUnit" class="txt">
 								<em id="showUnitTxt">盒</em>
-								<input id="showUnitVal" type="hidden" value=""/>
+								<input id="showUnitVal" type="hidden" value="盒"/>
 							</p>
 						</div>
 					</li>
@@ -174,7 +219,7 @@
 									<div class="mui-switch-handle"></div>
 								</div>
 							</div>
-							<input id="conditionPostagevVal" type="hidden" value="0" />
+							<input id="conditionPostagevVal" type="hidden" value="" />
 						</div>
 					</li>
 					<li id="byPostageCondition" class="item" style="display: none;">
@@ -300,6 +345,7 @@
 			</div>
 		</div>
 		
+		
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/rem.js"></script>
 		<script src="../js/jquery.js"></script>
@@ -310,6 +356,9 @@
 		<script src="../js/validate.js"></script>
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
+		<script src="../js/uploadMainOrSubImg.js"></script>
+		<script src="../js/uploadVideo.js"></script>
+		
 		<script>
 			mui.previewImage();
 			
@@ -502,301 +551,25 @@
 					}, false);
 				});
 			})(mui, document);
+		</script>
+		<script src="../js/addProduct.js"></script>
+		<script>
 			mui.plusReady(function(){
 				plus.webview.currentWebview().setStyle({
 				    softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
 				});
 			})
-//上传视频------------------------------------------------------------------------------------------------
-			document.getElementById('addVideoBtn').addEventListener('tap', function() {
-				showActionSheetVideo('addVideoBtn');
-//				var len = $('.mainImgBox').length;
-//				if(len>=1){
-//					alert('商品主图最多上传 1 张')
-//				}else{
-//					showActionSheet('addMainImgBtn');
-//				}
-			});
-			//弹出系统选择框 选择拍摄视频或者相册选取视频
-			function showActionSheetVideo(conf) {
-//				console.log(JSON.stringify(conf));
-				var divid = conf;
-				console.log('divid:'+divid)
-				var actionbuttons = [{
-					title: "拍摄视频"
-				}, {
-					title: "相册选取"
-				}];
-				var actionstyle = {
-					title: "选择视频",
-					cancel: "取消",
-					buttons: actionbuttons
-				};
-				plus.nativeUI.actionSheet(actionstyle, function(e) {
-					if (e.index == 1) {
-						getVideo(divid);
-					} else if (e.index == 2) {
-						galleryVideo(divid);
-					}
-				});
-			}
-			
-//上传图片---------------------------------------------------------------------------------------------
-			document.getElementById('addMainImgBtn').addEventListener('tap', function() {
-				var len = $('.mainImgBox').length;
-				if(len>=1){
-					alert('商品主图最多上传 1 张')
+			//是否上传段视频
+			mui('body').on('toggle', '#uploadShortVideo', function() {
+				var checked = event.detail.isActive;
+				if(!checked){
+					$('#uploadShortVideoVal').val(0);
+					$('#uploadShortVideoBox').fadeOut(0);
 				}else{
-					showActionSheet('addMainImgBtn');
+					$('#uploadShortVideoVal').val(1);
+					$('#uploadShortVideoBox').fadeIn(100);
 				}
 			});
-			document.getElementById('addSubImgBtn').addEventListener('tap', function() {
-				var len = $('.subImgBox').length;
-				if(len>=5){
-					alert('商品幅图最多上传 5 张')
-				}else{
-					showActionSheet('addSubImgBtn');
-				}
-				
-			});
-			//存放幅图数组
-			var files = [];
-			//初始上传地址 
-			var server = "http://192.168.1.200:8082/APPMerchant/appfileupload/appfileupload.do";
-			
-			var index = 1;
-			//弹出系统选择框 选择拍照或者相册
-			function showActionSheet(conf) {
-//				console.log(JSON.stringify(conf));
-				var divid = conf;
-				console.log('divid:'+divid)
-				var actionbuttons = [{
-					title: "拍照"
-				}, {
-					title: "相册选取"
-				}];
-				var actionstyle = {
-					title: "选择照片",
-					cancel: "取消",
-					buttons: actionbuttons
-				};
-				plus.nativeUI.actionSheet(actionstyle, function(e) {
-					if (e.index == 1) {
-						getImage(divid);
-					} else if (e.index == 2) {
-						galleryImg(divid);
-					}
-				});
-			}
-			//相机选取照片
-			function getImage(divid) {
-				var cmr = plus.camera.getCamera();
-				cmr.captureImage(function(p) {
-					plus.io.resolveLocalFileSystemURL(p, function(entry) {
-						compressImage(entry.toLocalURL(), entry.name, divid);
-					}, function(e) {
-						plus.nativeUI.toast("读取拍照文件错误：" + e.message);
-					});
-				}, function(e) {}, {
-					filename: "_doc/camera/",
-					index: 1
-				});
-			}
-			//相册选取照片
-			function galleryImg(divid) {
-				plus.gallery.pick(function(p) {
-					plus.io.resolveLocalFileSystemURL(p, function(entry) {
-						var fileSize = 0;
-						//图片压缩函数
-						entry.file(function(file){
-		                    // 数据只能在该函数内部显示
-		                    fileSize = (file.size * 100 / 1024) / 100
-		                    console.log("原始文件大小：" + fileSize +"KB   filename:"+file.name);
-		                    var quality = 90;
-		                    if(fileSize<200){
-		                    		alert('请上传图片大于200kb');
-		                    		return false;
-		                    }
-		                    if(fileSize>=102400){
-		                    		alert('上传图片太大');
-		                    		return false;
-		                    }
-		                    	console.log('quality:'+quality)
-		                    compressImage(entry.toLocalURL(), entry.name, divid);
-		                })
-					}, function(e) {
-						plus.nativeUI.toast("读取拍照文件错误：" + e.message);
-					});
-				}, function(e) {}, {
-					filename: "_doc/camera/",
-					filter: "image"
-				});
-			}
-			//图片压缩函数
-			function compressImage(url, filename, divid,quality) {
-				$('#'+divid).next('.error').fadeOut(0);
-				var name = "_doc/upload/" + divid + "-" + filename; //_doc/upload/F_ZDDZZ-1467602809090.jpg 
-				plus.zip.compressImage({
-					src: url,
-					//src: (String 类型 )压缩转换原始图片的路径 
-					dst: name,
-					//压缩转换目标图片的路径 
-					quality: 20,//quality: (Number 类型 )压缩图片的质量.取值范围为1-100 
-					overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
-				}, function(event) {
-					console.log('event:'+JSON.stringify(event))
-					//uploadf(event.target,divid); 
-					var path = name; //压缩转换目标图片的路径 
-					//event.target获取压缩转换后的图片url路 
-					//filename图片名称 
-					var size = (event.size * 100 / 1024) / 100;
-					console.log('压缩后size:'+size)
-					saveimage(event.target, divid, filename, path);
-				}, function(error) {
-					plus.nativeUI.toast("压缩图片失败，请稍候再试");
-				});
-			}
-			//图片保存到本地函数
-			function saveimage(url, divid, name, path) {
-//				alert('图片保存到本地函数')
-				var state = 0;
-				var wt = plus.nativeUI.showWaiting();
-				// plus.storage.clear(); 
-				name = name.substring(0, name.indexOf(".")); //图片名称：1467602809090 
-				var id = getUid();//调用一个随机数
-				var itemname = id + "img-" + divid; //429img-F_ZDDZ 
-				var itemvalue = plus.storage.getItem(itemname);
-				if (itemvalue == null) {
-					itemvalue = "{" + name + "," + path + "," + url + "}"; //{IMG_20160704_112614,_doc/upload/F_ZDDZZ-IMG_20160704_112614.jpg,file:///storage/emulated/0/Android/data/io.dcloud...../doc/upload/F_ZDDZZ-1467602809090.jpg} 
-				} else {
-					itemvalue = itemvalue + "{" + name + "," + path + "," + url + "}";
-				}
-				plus.storage.setItem(itemname, itemvalue);
-				// var src = 'src="'+url+'"'; 
-				var src = url;
-				alert("itemvalue="+url); 
-				showImgDetail(name, divid, id, src);
-				wt.close();
-			}
-			//将图片在本地显示出来
-			function showImgDetail(imgId, imgkey, id, src) {
-//				alert('将图片在本地显示出来')
-				if(imgkey=='addSubImgBtn'){
-					$('#'+imgkey).before('<span class="subImgBox">'+
-											'<img src="'+src+'" alt="" data-preview-src="" data-preview-group="1"/>'+
-											'<em class="delImgBtn">'+
-												'<img src="../images/icon/014.png" alt="" />'+
-											'</em>'+
-										'</span>')
-				}else if(imgkey=='addMainImgBtn'){
-					$('#'+imgkey).before('<span class="mainImgBox">'+
-											'<img src="'+src+'" alt=""  data-preview-src="" data-preview-group="0"/>'+
-											'<em class="delImgBtn">'+
-												'<img src="../images/icon/014.png" alt="" />'+
-											'</em>'+
-										'</span>')
-					
-				}
-			}
-			//上传图片文件放入数组
-			function upload_img() {
-				files = [];
-//				alert('上传图片文件放入数组')
-				var lenMain = $('.mainImgBox').length;
-				var lenSub  = $('.subImgBox').length;
-				if(lenMain==0){
-					$('#addMainImgBtn').next('.error').fadeIn(0);
-				};
-				if(lenSub==0){
-					$('#addSubImgBtn').next('.error').fadeIn(0);
-				};
-				if(lenMain>0&&lenSub>0){
-					files.push({
-						name: "MainUploadkey_" + 0,
-						path: $('.mainImgBox').find('img').attr('src')
-					});
-					$('.subImgBox').each(function(index){
-						var src = $(this).find('img').attr('src');
-						files.push({
-							name: "subUploadkey_" + index,
-							path: src
-						});
-					});
-					console.log('上传数组:'+JSON.stringify(files));
-					start_upload()
-				};
-			}
-			//开始上传
-			function start_upload() {
-//				alert('开始上传')
-				//判断下是否有照片在数组中
-				if (files.length <= 0) {
-					plus.nativeUI.alert("没有添加上传文件！");
-					return;
-				}
-				//原生的转圈等待框
-				var wt = plus.nativeUI.showWaiting();
-				var task=plus.uploader.createUpload(server,
-                    {method:"POST"},
-                    function(t,status){ //上传完成
-                        if(status==200){
-                        		console.log('上传成功:'+JSON.stringify(t));
-                            alert("上传成功："+t.responseText);
-                            wt.close(); //关闭等待提示按钮
-                        }else{
-                            alert("上传失败："+status);
-                            wt.close();//关闭等待提示按钮
-                        }
-                    }
-                );
-                console.log('task11:'+JSON.stringify(task));
-				//addData 添加上传数据
-				for (var i = 0; i < files.length; i++) {
-					var f = files[i];
-					console.log('task:'+JSON.stringify(task));
-					//addFile 添加上传文件
-					task.addFile(f.path, {key: f.name});
-				}
-				//执行上传
-				task.start();
-			}
-			
-			// 产生一个随机数  
-            function getUid() {  
-                return Math.floor(Math.random() * 100000000 + 10000000).toString();  
-            }
-            
-            //删除图片
-            mui('body').on('tap', '.delImgBtn', function() {
-				var mainStates = $(this).parents('span').hasClass('mainImgBox');
-				console.log('files.length:'+files.length)
-				if(files.length>0){//提交后创建了files数组后在删除
-					if(mainStates){	//点击按钮为删除主图
-						$('.mainImgBox').remove();
-						files.splice(0,1)
-					}else{//点击按钮删除幅图
-						if($('.mainImgBox').length>0){//主图还在情况下，删除幅图
-							var index = $(this).parents('span').index();
-							console.log('index:'+(index+1));
-							files.splice((index+1),1)
-							$(this).parents('span').remove();
-						}else{//主图不在的情况下，删除幅图
-							var index = $(this).parents('span').index();
-							console.log('index:'+(index+1));
-							files.splice((index+1),1)
-							$(this).parents('span').remove();
-						}
-					}
-				}else{//未创建files数组
-					if(mainStates){//删除主图
-						$('.mainImgBox').remove();
-					}else{//删除幅图
-						$(this).parents('span').remove();
-					}
-				}
-			});
-            
-//上传图片完毕-----------------------------------------------------------------------------------
 			
 			//包邮按钮
 			mui('body').on('change', '#freePostage', function() {
@@ -847,7 +620,6 @@
 					}
 					$('#showNotPostageDistrictTxt').html(postageDistrictTxt.join("、"));
 					$('#showNotPostageDistrictVal').val(postageDistrictVal.join(","))
-					
 				});
 				document.activeElement.blur();
 				mui('#NotPostageDistrict').popover('hide');
@@ -862,12 +634,20 @@
 			});
 			//发布商品
 			mui('body').on('tap', '#submitBtn', function(){
-				upload_img();
 				document.activeElement.blur();
 				
 				//上传的图片
 				var mainImg = $('.mainImgBox').length,
-				 	subImg  = $('.subImgBox').length;
+				 	subImg  = $('.subImgBox').length,
+				 	mainImgVal = $('#mainImgVal').val(),//主图回显路径
+				 	subImgVal = $('#subImgVal').val();//幅图回显路径
+				 	
+				//上传短视频
+				var uploadShortVideoVal = $('#uploadShortVideoVal').val(),//上传短视频,0:未开启，1:开启
+					VideoFile = $('.videoFileBox').length,
+					VideoImg  = $('.videoImgBox').length,
+					videoSrcVal = $('#videoSrcVal').val(),//上传短时频回显路径
+					videoImgSrc = $('#videoImgSrc').val();//上传视频封面回显路径
 				//声明变量
 				var productName = $.trim($('#productName').val()),//商品标题
 					productSubName = $.trim($('#productSubName').val()),//商品副标题
@@ -896,14 +676,17 @@
 				var publicationType = $('input[name=productType]:checked').val();//发布产品类型，0普通，1预售
 					
 				//验证输入框不能为空
+				mainImg == 0 ? mainImg = '' : mainImg = mainImg;
+				subImg == 0 ? subImg = '' : subImg = subImg;
+				
 				var inputNotNUll = [
 					{
-						'id':'addMainImgBtn',
+						'id':'mainImgVal',
 						'val':mainImg,
 						'type':'mainImg'
 					},
 					{
-						'id':'addSubImgBtn',
+						'id':'subImgVal',
 						'val':subImg,
 						'type':'subImg'
 					},
@@ -943,16 +726,28 @@
 						'type':'number'
 					}
 				];
+				if(uploadShortVideoVal==0){//未开启上传视频
+					console.log('未开启上传视频')
+				}else if(uploadShortVideoVal==1){//开启上传视频
+					console.log('开启上传视频');
+					VideoImg == 0 ? VideoImg = '' : VideoImg = VideoImg;
+					VideoFile == 0 ? VideoFile = '' : VideoFile = VideoFile;
+					inputNotNUll.push({'id':'videoSrcVal','val':VideoFile,'type':'videofile'});
+					inputNotNUll.push({'id':'videoImgSrc','val':VideoImg,'type':'videoimg'});
+				}
+				
 				if(publicationType==0){//普通商品
 					console.log('普通')
 				}else if(publicationType==1){//预售商品
 					inputNotNUll.push({'id':'reserveProductNum','val':reserveProductNum,'type':'number'});
 					inputNotNUll.push({'id':'reserveTime','val':reserveTime,'type':'time'});
 				}
+				
 				if(freePostage == 'checked'){//包邮
 					console.log('包邮')
 				}else if(freePostage===undefined){//不包邮
 					inputNotNUll.push({'id':'postageVal','val':postageVal,'type':'number'});
+					console.log('conditionPostagevVal：'+conditionPostagevVal)
 					if(conditionPostagevVal==1){//开启条件包邮
 						inputNotNUll.push({'id':'showPostageVal','val':showPostageVal,'type':'select'});
 						switch(showPostageVal){//1:根据件数，2:根据钱数，3:件数和地域限制，4:钱数和地域限制
@@ -975,8 +770,11 @@
 						}
 					}
 				}
-				isNoEmpty(inputNotNUll)
+				isNoEmpty(inputNotNUll);
+				console.log('上传inputNotNUll：'+JSON.stringify(inputNotNUll)+'上传验证数组长度：'+inputNotNUll.length);
 			})
+			
+			
 			function isNoEmpty(data){
 				var states = [];
 				var j = 0;
@@ -1000,12 +798,12 @@
 				console.log('j:'+j);
 				console.log('上传验证数组：'+JSON.stringify(states)+'上传验证数组长度：'+states.length);
 				
-				$.each(states,function(i,v){
-					if(!v) return false;
-					console.log('验证通过，可以提交')
-				})
-				
-//				upload_img();
+				console.log('$.inArray(true, states):'+$.inArray(false, states));
+				if($.inArray(false, states)==-1){
+					upload_img();
+				}else{
+					console.log('请填写完整')
+				}
 			}
 		</script>
 	</body>
